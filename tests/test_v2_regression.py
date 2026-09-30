@@ -43,13 +43,14 @@ def test_v2_encoded_text_response_is_binary(text_content_type: str) -> None:
         environ: dict[str, Any],
         start_response: Callable[..., Callable[[bytes], int]],
     ) -> Iterable[bytes]:
-        start_response(
+        write = start_response(
             "200 OK",
             [
                 ("Content-Type", text_content_type),
                 ("Content-Encoding", "brotli"),
             ],
         )
+        assert callable(write)
         return [b"Hello World\n"]
 
     handler = make_lambda_handler(app, binary_support=True)
