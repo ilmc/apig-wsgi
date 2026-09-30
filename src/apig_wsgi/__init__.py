@@ -223,7 +223,10 @@ def get_environ_v2(event: dict[str, Any], context: Any) -> dict[str, Any]:
         elif key == "X_FORWARDED_PORT":
             environ["SERVER_PORT"] = raw_value.split(",")[-1]
         elif key == "COOKIE":
-            environ["HTTP_COOKIE"] += ";" + raw_value
+            if environ["HTTP_COOKIE"]:
+                environ["HTTP_COOKIE"] += ";" + raw_value
+            else:
+                environ["HTTP_COOKIE"] = raw_value
             continue
 
         environ["HTTP_" + key] = raw_value
