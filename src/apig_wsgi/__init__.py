@@ -95,7 +95,7 @@ def make_lambda_handler(
         elif version == "2.0":
             environ = get_environ_v2(event, context)
             response = V2Response(
-                binary_support=True,
+                binary_support=True if binary_support is None else binary_support,
                 non_binary_content_type_prefixes=non_binary_prefixes_tuple,
             )
         else:
