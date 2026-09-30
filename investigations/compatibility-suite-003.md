@@ -83,7 +83,9 @@ One concrete example is in `TestV2Events`: `test_get_binary_support_default_text
 
 This gives a misleading impression of v2 coverage for that case. The finding does not demonstrate a runtime defect; it demonstrates that a large mixed test module can obscure which event family a test actually exercises.
 
-A dedicated v2 regression test is added by this undertaking so that the intended v2 behaviour is exercised without altering upstream-derived runtime code.
+`tests/test_v2_regression.py` now exercises that intended v2 behaviour explicitly: a text-family content type combined with `Content-Encoding: brotli` must be returned as a base64-encoded v2 response with ordinary v2 headers and the v2 `cookies` field.
+
+The original upstream-derived test is deliberately left untouched in this first evidence pass. That preserves provenance while making the missing compatibility claim executable.
 
 ## Architectural correspondence
 
