@@ -348,6 +348,8 @@ class V2Response(BaseResponse):
             key_lower = key.lower()
             if key_lower == "set-cookie":
                 cookies.append(value)
+            elif key_lower in headers:
+                headers[key_lower] += "," + value
             else:
                 headers[key_lower] = value
 
